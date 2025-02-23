@@ -57,6 +57,7 @@
 
     --radius: 0.5rem
   }
+
   .dark {
 
     --background: 224 71.4% 4.1%;
@@ -113,6 +114,7 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
@@ -124,20 +126,28 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
 }
 
 
-.max-w {
-  max-width: 1205
+.max-w{
+  max-width: 1205px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.m-top{
+
+.m-top {
 
   margin-top: 30px;
 }
-.bb{
+
+.bb {
   border: 1px solid #ff0000;
 }
+
+
+

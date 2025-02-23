@@ -4,12 +4,12 @@ import { Outlet } from 'react-router-dom'
 
 function Layout() {
   return (
-    <div className='max-w-7xl mx-auto'>
+    <div className=' mx-auto'>
       <div className='h-20 mt-5'>
         <Navbar />
       </div>
 
-      <div className='flex flex-col w-full h-screen max-w-7xl mx-auto'>
+      <div className='flex flex-col w-full h-screen  mx-auto'>
         <div className={`flex-1 }`}>
           <Outlet />
         </div>
