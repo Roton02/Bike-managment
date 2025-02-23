@@ -1,3 +1,3 @@
 export default function contract() {
-  return <div>contract</div>
+  return <div>contract hello i am a masum khondkher</div>
 }
