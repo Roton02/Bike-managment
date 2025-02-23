@@ -11,7 +11,7 @@ const Specifications = () => {
             <h2 className=" uppercase text-gray-500 font-semibold text-2xl">Technology</h2>
             <PageHeading title="Vehicle specifications"></PageHeading>
 
-            <div className="  grid  grid-cols-3 my-3">
+            <div className="  grid  lg:grid-cols-3 md:grid-cols-2 grid-cols-1 my-3">
 
                 <div className="">
                     <img src={img} alt="" />

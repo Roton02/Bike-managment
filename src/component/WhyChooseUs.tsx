@@ -46,11 +46,11 @@ const WhyChooseUs = () => {
                 {services.map((service, index) => (
                     <div
                         key={index}
-                        className="relative flex items-center gap- bg-white   rounded-lg  "
+                        className="relative flex items-center lg:mb-0 md:mb-0  mb-8 bg-white   rounded-lg  "
                     >
                         {index % 2 === 0 ? (
                             <div className=" flex    w-full">
-                                <div className="flex items-center justify-start w-5/12  ">
+                                <div className="flex md:flex-col lg:flex-row  items-center justify-start lg:w-5/12  md:w-5/12 ">
                                     <img
                                         src={service.image}
                                         alt={service.title}
@@ -61,22 +61,23 @@ const WhyChooseUs = () => {
                                         <p className="text-gray-600 text-sm">{service.description}</p>
                                     </div>
                                 </div>
-                                <div className="  w-2/12    flex items-center justify-center relative ">
+
+                                <div className="  w-2/12    lg:flex md:flex hidden items-center justify-center relative ">
                                     <p className=" absolute top-0 border-x-2 border-gray-500 h-full z-10 "></p>
                                     <p className=" absolute   h-4 w-4 z-20 bg-primary my-auto border-gray-500 border-2 "></p>
                                 </div>
-                                <div className="w-5/12 "></div>
+                                <div className="w-5/12 lg:flex md:flex hidden "></div>
                             </div>
                         ) : (
                             <div className=" flex    w-full">
-                                <div className="w-5/12 "></div>
+                                <div className="w-5/12 lg:flex md:flex hidden "></div>
 
-                                <div className="  w-2/12   flex items-center justify-center relative ">
+                                <div className="  w-2/12 lg:flex md:flex hidden    items-center justify-center relative ">
                                     <p className=" absolute top-0 border-x-2 border-gray-500 h-full z-10 "></p>
                                     <p className=" absolute   h-4 w-4 z-20 bg-primary my-auto border-gray-500 border-2 "></p>
                                 </div>
 
-                                <div className="flex items-center  w-5/12  ">
+                                <div className="flex lg:flex-row md:flex-col flex-row-reverse items-center  lg:w-5/12 md:w-5/12  ">
                                     <img
                                         src={service.image}
                                         alt={service.title}

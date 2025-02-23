@@ -23,7 +23,7 @@ const Consultation = () => {
             style={{ backgroundImage: `url(${bg})` }}
         >
             <div className="max-w">
-                <div className="bg-white shadow-lg p-6 lg:w-6/12 md:w-8/12 w-full mx-auto text-center h-5/6">
+                <div className="bg-white bg-opacity-70 shadow-lg p-6 lg:w-6/12 md:w-8/12 w-full mx-auto text-center h-5/6">
                     <img src={logo} alt="Bike-Bike Logo" className="mx-auto w-20 mb-3" />
                     <PageHeading title="SIGN UP FOR CONSULTATION" />
                     <p className="text-gray-600 text-sm mt-1">
@@ -79,18 +79,18 @@ const Consultation = () => {
 
                 {/* Metrics Section */}
                 <div className="mt-6 text-white p-4 rounded-md max-w">
-                    <div className="flex justify-between text-sm">
+                    <div className="flex lg:flex-row md:flex-row flex-col gap-4 justify-between text-sm">
                         <div>
                             <p className="font-bold">MILEAGE ACCUMULATED</p>
-                            <p className="text-lg">45,508.797 km</p>
+                            <p className="text-2xl font-semibold">45,508.797 km</p>
                         </div>
                         <div>
                             <p className="font-bold">CO2 REDUCTION</p>
-                            <p className="text-lg">206,762,230 kg</p>
+                            <p className="text-2xl font-semibold">206,762,230 kg</p>
                         </div>
                         <div>
                             <p className="font-bold">AIR CLEANED</p>
-                            <p className="text-lg">~2,275,441 trees</p>
+                            <p className="text-2xl font-semibold">~2,275,441 trees</p>
                         </div>
                     </div>
                 </div>

@@ -7,8 +7,8 @@ import PrimaryBtn from "@/components/PrimaryBtn";
 
 const NewProduct = () => {
     return (
-        <div className=" max-w m-top mb-20 flex text-start p-4 gap-4">
-            <div className=" w-7/12  space-y-6 ">
+        <div className=" max-w m-top mb-20 flex lg:flex-row md:flex-row flex-col text-start p-4 gap-4">
+            <div className=" lg:w-7/12 md:w-7/12 w-f  space-y-6 ">
                 <div className="flex gap-3 mb-4   justify-between  h-ful">
                     <h1 className="text-5xl text-black font-semibold uppercase">See Our New  <br /> Products</h1>
                     <div className=" flex  gap-3  items-end " >

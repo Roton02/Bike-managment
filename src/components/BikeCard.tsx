@@ -5,15 +5,17 @@ type BikeDatatype = {
 
 import bikePhoto from '../assets/bike@2x.png'
 import PrimaryBtn from "./PrimaryBtn";
+import { useNavigate } from "react-router-dom";
 
 const BikeCard = ({ bike }: BikeDatatype) => {
+    const navigate = useNavigate()
 
     return (
-        <div className="">
-            <div className=" bg-gray-200 p-5 relative">
-                <h1 className="text-xl  text-primary  font-semibold  uppercase text-end">Youthful - Stylish</h1>
-                <div className=" overflow-hidden max-h-52 flex justify-center items-center">
-                    <img className="w-full " src={bikePhoto} alt="bike photo" />
+        <div onClick={()=>navigate(`/product/${bike?.id}`)} className=" hover:border-primary border-2">
+            <div className=" bg-gray-200 p-4 relative">
+                <h1 className="lg:text-lg md:text-lg    text-primary  font-semibold  uppercase text-end">Youthful - Stylish</h1>
+                <div className=" overflow-hidden h-40 flex justify-center items-center">
+                    <img className="h-full  " src={bikePhoto} alt="bike photo" />
                 </div>
 
                 <div className=" absolute top-4 left-4 flex  flex-col gap-3 bg-white border  rounded-b-full justify-start items-center p-1 ">

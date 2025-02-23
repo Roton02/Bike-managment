@@ -1,3 +1,4 @@
+
 import BikeCard from "@/components/bikeCard";
 import PageHeading from "@/components/PageHeading";
 import { BikeData } from "@/interface/bikedata";
@@ -27,7 +28,7 @@ const BestSeller = () => {
     <div className=" max-w m-top ">
 
       <PageHeading title="Best Seller"></PageHeading>
-      <div className=" grid grid-cols-4 justify-center">
+      <div className=" grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 justify-center">
         {
           filteredData?.map((item: BikeData) => {
             return (
