@@ -24,7 +24,7 @@ const BestSeller = () => {
   console.log(data);
 
   return (
-    <div className=" max-w m-top bb">
+    <div className=" max-w m-top ">
 
       <PageHeading title="Best Seller"></PageHeading>
       <div className=" grid grid-cols-4 justify-center">
