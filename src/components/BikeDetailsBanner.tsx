@@ -28,8 +28,8 @@ const BikeDetailsBanner = ({ bike }: PropsType) => {
 
 
                     </div>
-                    <div className=" absolute bottom-0  w-full mx-auto  left-0">
-                        <div className=" bg-black bg-opacity-50 w-8/12 mx-auto min-h-9 p-8 flex justify-center  gap-4 ">
+                    <div className=" absolute bottom-0  w-full mx-auto  left-0" >
+                        <div className=" bg-black bg-opacity-50 lg:w-8/12 md:w-10/12 w-full mx-auto min-h-9 p-8  grid lg:grid-cols-4  grid-cols-2 justify-center  gap-4 ">
                             <div className="border-r-2 border-white text-white text-center  p-2">
                                 <h1>Max Speed</h1>
                                 <p className=" text-xl font-semibold">{bike?.maxSpeed}</p>

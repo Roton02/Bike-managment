@@ -17,7 +17,7 @@ const DetailsContent = ({ bike }: PropsType) => {
 
     return (
         <div className="max-w-screen-lg mx-auto p-6">
-            <div className=" flex gap-3">
+            <div className=" flex lg:flex-row md:flex-row flex-col gap-3">
 
                 <div className="">
                     {/* Bike Name & Price Section */}
@@ -45,7 +45,7 @@ const DetailsContent = ({ bike }: PropsType) => {
             {/* Color Options */}
             <div className="flex justify-center gap-3 mt-4">
                 {bike?.colorOptions.map((color, index) => (
-                    <div key={index} className="w-6 h-6 rounded-full border border-gray-300" title={color} />
+                    <div key={index} className="w-6 h-6 rounded-full border border-gray-300 " title={color} />
                 ))}
             </div>
 
