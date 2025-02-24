@@ -1,6 +1,11 @@
 import { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import { Menu, X, LogIn,  } from 'lucide-react'
+import { Menu, X, LogIn, ShoppingCart, } from 'lucide-react'
+// import component 👇
+import Drawer from 'react-modern-drawer'
+
+//import styles 👇
+import 'react-modern-drawer/dist/index.css'
 
 export const user = {
   name: 'Mohammed Sanaullah Roton',
@@ -15,6 +20,11 @@ import logo from '../assets/Logo.png'
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [showProfile, setShowProfile] = useState(false)
+
+  const [isOpenDrawer, setIsOpenDrawer] = useState(false)
+  const toggleDrawer = () => {
+    setIsOpenDrawer((prevState) => !prevState)
+  }
 
   const navLinks = [
     { path: '/', name: 'Home' },
@@ -40,7 +50,7 @@ const Navbar = () => {
               to={link.path}
               className={({ isActive }) =>
                 `text-lg font-medium px-3 py-2 rounded-md transition duration-300 ${isActive
-                  ? 'text-blue-600 dark:text-blue-400'
+                  ? 'text-primary dark:text-blue-400'
                   : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'
                 }`
               }
@@ -51,20 +61,40 @@ const Navbar = () => {
         </div>
 
         {/* Login/Profile Section */}
-        <div className='relative'>
+        <div className='relative '>
           {user.isLoggedIn ? (
-            <div
-              className='relative group cursor-pointer'
-              onClick={() => setShowProfile(!showProfile)}
-            >
-              <img
-                className='w-10 h-10 rounded-full border-2 border-gray-300 hover:border-blue-500'
-                src={user.image}
-                alt='Profile'
-              />
-              <span className='absolute bottom-0 left-1/2 transform -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition'>
-                {user.name}
-              </span>
+            <div className=" flex gap-2 items-center">
+
+
+              {/* cart  */}
+              <button onClick={toggleDrawer} className=' hover:bg-primary bg-opacity-30 p-1 rounded-full hover:text-white '> <ShoppingCart size={30} strokeWidth={0.95} /> </button>
+
+              {/* Drawer */}
+
+              <Drawer
+                open={isOpenDrawer}
+                onClose={toggleDrawer}
+                direction='right'
+                className='bla bla bla'
+              >
+                <div>Hello World</div>
+              </Drawer>
+
+              <div
+                className='relative group cursor-pointer '
+                onClick={() => setShowProfile(!showProfile)}
+              >
+                <img
+                  className='w-10 h-10 rounded-full border-2 border-gray-300 hover:border-blue-500'
+                  src={user.image}
+                  alt='Profile'
+                />
+                <span className='absolute top-full left-1/2 transform -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition'>
+                  {user.name}
+                </span>
+
+              </div>
+
             </div>
           ) : (
             <NavLink
