@@ -6,6 +6,9 @@ import Login from '@/pages/Login'
 import Register from '@/pages/Register'
 import { createBrowserRouter } from 'react-router-dom'
 import BikeDetails from "../pages/BikeDetails"
+import DashBoard from '@/layout/DashBoard'
+import OverView from '@/pages/DashBoard/OverView'
+import MyOrder from '@/pages/DashBoard/MyOrder'
 
 const router = createBrowserRouter([
   {
@@ -39,6 +42,21 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: '/dashBoard',
+    element: <DashBoard />,
+    children: [
+      
+      {
+        path: '/dashBoard/overView',
+        element: <OverView></OverView>,
+      },
+      {
+        path: '/dashBoard/myOrder',
+        element: <MyOrder></MyOrder>,
+      },
+    ]
+  }
 
 ])
 

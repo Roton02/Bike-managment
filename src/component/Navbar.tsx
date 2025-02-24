@@ -1,12 +1,14 @@
 import { useState } from 'react'
-import { NavLink } from 'react-router-dom'
-import { Menu, X, LogIn } from 'lucide-react'
+import { Link, NavLink } from 'react-router-dom'
+import { Menu, X, LogIn,  } from 'lucide-react'
 
-const user = {
+export const user = {
   name: 'Mohammed Sanaullah Roton',
   email: 'roton@example.com',
   image: 'https://i.pravatar.cc/40',
-  isLoggedIn: false, // Change to false to test logout state
+  isLoggedIn: true, // Change to false to test logout state
+  // role: 'admin'
+  role: 'user'
 }
 import logo from '../assets/Logo.png'
 
@@ -37,10 +39,9 @@ const Navbar = () => {
               key={index}
               to={link.path}
               className={({ isActive }) =>
-                `text-lg font-medium px-3 py-2 rounded-md transition duration-300 ${
-                  isActive
-                    ? 'text-blue-600 dark:text-blue-400'
-                    : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'
+                `text-lg font-medium px-3 py-2 rounded-md transition duration-300 ${isActive
+                  ? 'text-blue-600 dark:text-blue-400'
+                  : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'
                 }`
               }
             >
@@ -99,9 +100,11 @@ const Navbar = () => {
                 <li className='px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer'>
                   Settings
                 </li>
-                <li className='px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer'>
-                  Dashboard
-                </li>
+                <Link to={user?.role === 'admin' ? '/dashBoard/overView' : '/dashBoard/myOrder'}>
+                  <li className='px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer'>
+                    Dashboard
+                  </li>
+                </Link>
                 <li className='px-4 py-2 text-red-500 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer'>
                   Logout
                 </li>
