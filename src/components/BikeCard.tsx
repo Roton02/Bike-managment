@@ -11,7 +11,7 @@ const BikeCard = ({ bike }: BikeDatatype) => {
     const navigate = useNavigate()
 
     return (
-        <div onClick={()=>navigate(`/product/${bike?.id}`)} className=" hover:border-primary border-2">
+        <div onClick={() => navigate(`/product/${bike?.id}`)} className=" hover:border-primary border-2">
             <div className=" bg-gray-200 p-4 relative">
                 <h1 className="lg:text-lg md:text-lg    text-primary  font-semibold  uppercase text-end">Youthful - Stylish</h1>
                 <div className=" overflow-hidden h-40 flex justify-center items-center">
@@ -44,7 +44,9 @@ const BikeCard = ({ bike }: BikeDatatype) => {
                 <h1 className="  font-semibold text-xl text-black text-start ">{bike?.name}</h1>
                 <p className=" text-xl text-primary font-bold my-4">{bike?.price} TK</p>
                 <div className=" flex justify-between items-center">
-                    <PrimaryBtn title={'Buy Now'}></PrimaryBtn>
+                    <button type="button" onClick={(e) => e.stopPropagation()}>
+                        <PrimaryBtn title={'Buy Now'} />
+                    </button>
                     <p className=" text-primary">Sold 1.5k</p>
                 </div>
             </div>
