@@ -7,8 +7,8 @@ export const user = {
   email: 'roton@example.com',
   image: 'https://i.pravatar.cc/40',
   isLoggedIn: true, // Change to false to test logout state
-  // role: 'admin'
-  role: 'user'
+  role: 'admin'
+  // role: 'user'
 }
 import logo from '../assets/Logo.png'
 
@@ -77,7 +77,7 @@ const Navbar = () => {
 
           {/* Profile Modal */}
           {showProfile && user.isLoggedIn && (
-            <div className='absolute right-0 mt-3 w-60 bg-white dark:bg-gray-800 shadow-lg rounded-lg py-3'>
+            <div className='absolute right-0 mt-3 w-60 bg-white dark:bg-gray-800 shadow-lg rounded-lg py-3 z-40  top-10'>
               <div className='flex items-center gap-3 px-4 py-2 border-b dark:border-gray-700'>
                 <img
                   className='w-12 h-12 rounded-full'
@@ -93,7 +93,7 @@ const Navbar = () => {
                   </p>
                 </div>
               </div>
-              <ul className='py-2'>
+              <ul className='py-2 '>
                 <li className='px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer'>
                   Profile
                 </li>

@@ -9,6 +9,9 @@ import BikeDetails from "../pages/BikeDetails"
 import DashBoard from '@/layout/DashBoard'
 import OverView from '@/pages/DashBoard/OverView'
 import MyOrder from '@/pages/DashBoard/MyOrder'
+import ManageUser from '@/pages/DashBoard/ManageUser'
+import ManageProduct from '@/pages/DashBoard/ManageProduct'
+import ManageOrders from '@/pages/DashBoard/ManageOrder'
 
 const router = createBrowserRouter([
   {
@@ -50,6 +53,18 @@ const router = createBrowserRouter([
       {
         path: '/dashBoard/overView',
         element: <OverView></OverView>,
+      },
+      {
+        path: '/dashBoard/userManagement',
+        element: <ManageUser></ManageUser>,
+      },
+      {
+        path: '/dashBoard/product-management',
+        element: <ManageProduct></ManageProduct>,
+      },
+      {
+        path: '/dashBoard/order-management',
+        element: <ManageOrders></ManageOrders>,
       },
       {
         path: '/dashBoard/myOrder',
