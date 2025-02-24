@@ -13,6 +13,7 @@ import ManageUser from '@/pages/DashBoard/ManageUser'
 import ManageProduct from '@/pages/DashBoard/ManageProduct'
 import ManageOrders from '@/pages/DashBoard/ManageOrder'
 import ManagePayments from '@/pages/DashBoard/ManagePayments'
+import SupportHelp from '@/pages/DashBoard/SupportHelp'
 
 const router = createBrowserRouter([
   {
@@ -77,6 +78,10 @@ const router = createBrowserRouter([
       {
         path: '/dashBoard/myOrder',
         element: <MyOrder></MyOrder>,
+      },
+      {
+        path: '/dashBoard/support',
+        element: <SupportHelp></SupportHelp>,
       },
     ]
   }

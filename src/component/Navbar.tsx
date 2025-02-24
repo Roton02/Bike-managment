@@ -12,8 +12,8 @@ export const user = {
   email: 'roton@example.com',
   image: 'https://i.pravatar.cc/40',
   isLoggedIn: true, // Change to false to test logout state
-  role: 'admin'
-  // role: 'user'
+  // role: 'admin'
+  role: 'user'
 }
 import logo from '../assets/Logo.png'
 
