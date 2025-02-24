@@ -12,6 +12,7 @@ import MyOrder from '@/pages/DashBoard/MyOrder'
 import ManageUser from '@/pages/DashBoard/ManageUser'
 import ManageProduct from '@/pages/DashBoard/ManageProduct'
 import ManageOrders from '@/pages/DashBoard/ManageOrder'
+import ManagePayments from '@/pages/DashBoard/ManagePayments'
 
 const router = createBrowserRouter([
   {
@@ -66,6 +67,13 @@ const router = createBrowserRouter([
         path: '/dashBoard/order-management',
         element: <ManageOrders></ManageOrders>,
       },
+      {
+        path: '/dashBoard/payment-management',
+        element: <ManagePayments></ManagePayments>,
+      },
+
+
+      // user 
       {
         path: '/dashBoard/myOrder',
         element: <MyOrder></MyOrder>,

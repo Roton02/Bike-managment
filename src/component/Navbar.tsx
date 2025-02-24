@@ -6,7 +6,7 @@ export const user = {
   name: 'Mohammed Sanaullah Roton',
   email: 'roton@example.com',
   image: 'https://i.pravatar.cc/40',
-  isLoggedIn: true, // Change to false to test logout state
+  isLoggedIn: false, // Change to false to test logout state
   role: 'admin'
   // role: 'user'
 }

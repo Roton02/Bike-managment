@@ -7,7 +7,7 @@ import logo from "../assets/logo-white.png"
 const DashNav = () => {
 
     const adminLinks = [
-        { to: '/dashBoard/', label: 'OverView' },
+        { to: '/dashBoard/overView', label: 'OverView' },
         { to: '/dashBoard/userManagement', label: 'User Management' },
         { to: '/dashBoard/product-management', label: 'Product Management' },
         { to: '/dashBoard/order-management', label: 'Order Management' },
