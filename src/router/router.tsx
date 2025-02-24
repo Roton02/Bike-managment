@@ -29,16 +29,17 @@ const router = createBrowserRouter([
         path: '/contact',
         element: <h2>Contact</h2>,
       },
+      {
+        path: 'login',
+        element: <Login />,
+      },
+      {
+        path: 'register',
+        element: <Register />,
+      },
     ],
   },
-  {
-    path: 'login',
-    element: <Login />,
-  },
-  {
-    path: 'register',
-    element: <Register />,
-  },
+
 ])
 
 export default router

@@ -6,7 +6,7 @@ const user = {
   name: 'Mohammed Sanaullah Roton',
   email: 'roton@example.com',
   image: 'https://i.pravatar.cc/40',
-  isLoggedIn: true, // Change to false to test logout state
+  isLoggedIn: false, // Change to false to test logout state
 }
 import logo from '../assets/Logo.png'
 
@@ -68,7 +68,7 @@ const Navbar = () => {
           ) : (
             <NavLink
               to='/login'
-              className='flex items-center gap-2 text-gray-700 dark:text-gray-200 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700'
+              className='flex items-center gap-2  dark:text-gray-200 px-2 py-1 bg-primary text-white rounded-sm hover:bg-blue-700'
             >
               <LogIn size={20} /> Login
             </NavLink>
@@ -122,7 +122,7 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className='lg:hidden bg-white dark:bg-gray-800 shadow-lg py-4'>
+        <div className='lg:hidden bg-gray-200 text-gray-500 dark:bg-gray-800 shadow-lg py-4'>
           <ul className='flex flex-col items-center gap-4'>
             {navLinks.map((link, index) => (
               <li key={index}>
