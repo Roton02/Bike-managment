@@ -1,18 +1,30 @@
 import { useState } from 'react'
-import { NavLink } from 'react-router-dom'
-import { Menu, X, LogIn } from 'lucide-react'
+import { Link, NavLink } from 'react-router-dom'
+import { Menu, X, LogIn, ShoppingCart, } from 'lucide-react'
+// import component 👇
+import Drawer from 'react-modern-drawer'
 
-const user = {
+//import styles 👇
+import 'react-modern-drawer/dist/index.css'
+
+export const user = {
   name: 'Mohammed Sanaullah Roton',
   email: 'roton@example.com',
   image: 'https://i.pravatar.cc/40',
   isLoggedIn: true, // Change to false to test logout state
+  role: 'admin'
+  // role: 'user'
 }
 import logo from '../assets/Logo.png'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [showProfile, setShowProfile] = useState(false)
+
+  const [isOpenDrawer, setIsOpenDrawer] = useState(false)
+  const toggleDrawer = () => {
+    setIsOpenDrawer((prevState) => !prevState)
+  }
 
   const navLinks = [
     { path: '/', name: 'Home' },
@@ -37,10 +49,9 @@ const Navbar = () => {
               key={index}
               to={link.path}
               className={({ isActive }) =>
-                `text-lg font-medium px-3 py-2 rounded-md transition duration-300 ${
-                  isActive
-                    ? 'text-blue-600 dark:text-blue-400'
-                    : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'
+                `text-lg font-medium px-3 py-2 rounded-md transition duration-300 ${isActive
+                  ? 'text-primary dark:text-blue-400'
+                  : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'
                 }`
               }
             >
@@ -50,25 +61,45 @@ const Navbar = () => {
         </div>
 
         {/* Login/Profile Section */}
-        <div className='relative'>
+        <div className='relative '>
           {user.isLoggedIn ? (
-            <div
-              className='relative group cursor-pointer'
-              onClick={() => setShowProfile(!showProfile)}
-            >
-              <img
-                className='w-10 h-10 rounded-full border-2 border-gray-300 hover:border-blue-500'
-                src={user.image}
-                alt='Profile'
-              />
-              <span className='absolute bottom-0 left-1/2 transform -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition'>
-                {user.name}
-              </span>
+            <div className=" flex gap-2 items-center">
+
+
+              {/* cart  */}
+              <button onClick={toggleDrawer} className=' hover:bg-primary bg-opacity-30 p-1 rounded-full hover:text-white '> <ShoppingCart size={30} strokeWidth={0.95} /> </button>
+
+              {/* Drawer */}
+
+              <Drawer
+                open={isOpenDrawer}
+                onClose={toggleDrawer}
+                direction='right'
+                className='bla bla bla'
+              >
+                <div>Hello World</div>
+              </Drawer>
+
+              <div
+                className='relative group cursor-pointer '
+                onClick={() => setShowProfile(!showProfile)}
+              >
+                <img
+                  className='w-10 h-10 rounded-full border-2 border-gray-300 hover:border-blue-500'
+                  src={user.image}
+                  alt='Profile'
+                />
+                <span className='absolute top-full left-1/2 transform -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition'>
+                  {user.name}
+                </span>
+
+              </div>
+
             </div>
           ) : (
             <NavLink
               to='/login'
-              className='flex items-center gap-2 text-gray-700 dark:text-gray-200 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700'
+              className='flex items-center gap-2  dark:text-gray-200 px-2 py-1 bg-primary text-white rounded-sm hover:bg-blue-700'
             >
               <LogIn size={20} /> Login
             </NavLink>
@@ -76,7 +107,7 @@ const Navbar = () => {
 
           {/* Profile Modal */}
           {showProfile && user.isLoggedIn && (
-            <div className='absolute right-0 mt-3 w-60 bg-white dark:bg-gray-800 shadow-lg rounded-lg py-3'>
+            <div className='absolute right-0 mt-3 w-60 bg-white dark:bg-gray-800 shadow-lg rounded-lg py-3 z-40  top-10'>
               <div className='flex items-center gap-3 px-4 py-2 border-b dark:border-gray-700'>
                 <img
                   className='w-12 h-12 rounded-full'
@@ -92,16 +123,18 @@ const Navbar = () => {
                   </p>
                 </div>
               </div>
-              <ul className='py-2'>
-                <li className='px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer'>
+              <ul className='py-2 '>
+                {/* <li className='px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer'>
                   Profile
                 </li>
                 <li className='px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer'>
                   Settings
-                </li>
-                <li className='px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer'>
-                  Dashboard
-                </li>
+                </li> */}
+                <Link to={user?.role === 'admin' ? '/dashBoard/overView' : '/dashBoard/myOrder'}>
+                  <li className='px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer'>
+                    Dashboard
+                  </li>
+                </Link>
                 <li className='px-4 py-2 text-red-500 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer'>
                   Logout
                 </li>
@@ -122,7 +155,7 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className='lg:hidden bg-white dark:bg-gray-800 shadow-lg py-4'>
+        <div className='lg:hidden bg-gray-200 text-gray-500 dark:bg-gray-800 shadow-lg py-4'>
           <ul className='flex flex-col items-center gap-4'>
             {navLinks.map((link, index) => (
               <li key={index}>

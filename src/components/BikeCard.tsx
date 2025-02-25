@@ -5,15 +5,17 @@ type BikeDatatype = {
 
 import bikePhoto from '../assets/bike@2x.png'
 import PrimaryBtn from "./PrimaryBtn";
+import { useNavigate } from "react-router-dom";
 
 const BikeCard = ({ bike }: BikeDatatype) => {
+    const navigate = useNavigate()
 
     return (
-        <div className="">
-            <div className=" bg-gray-200 p-5 relative">
-                <h1 className="text-xl  text-primary  font-semibold  uppercase text-end">Youthful - Stylish</h1>
-                <div className=" overflow-hidden max-h-52 flex justify-center items-center">
-                    <img className="w-full " src={bikePhoto} alt="bike photo" />
+        <div onClick={() => navigate(`/product/${bike?.id}`)} className=" hover:border-primary border-2">
+            <div className=" bg-gray-200 p-4 relative">
+                <h1 className="lg:text-lg md:text-lg    text-primary  font-semibold  uppercase text-end">Youthful - Stylish</h1>
+                <div className=" overflow-hidden h-40 flex justify-center items-center">
+                    <img className="h-full  " src={bikePhoto} alt="bike photo" />
                 </div>
 
                 <div className=" absolute top-4 left-4 flex  flex-col gap-3 bg-white border  rounded-b-full justify-start items-center p-1 ">
@@ -42,7 +44,9 @@ const BikeCard = ({ bike }: BikeDatatype) => {
                 <h1 className="  font-semibold text-xl text-black text-start ">{bike?.name}</h1>
                 <p className=" text-xl text-primary font-bold my-4">{bike?.price} TK</p>
                 <div className=" flex justify-between items-center">
-                    <PrimaryBtn title={'Buy Now'}></PrimaryBtn>
+                    <button type="button" onClick={(e) => e.stopPropagation()}>
+                        <PrimaryBtn title={'Buy Now'} />
+                    </button>
                     <p className=" text-primary">Sold 1.5k</p>
                 </div>
             </div>

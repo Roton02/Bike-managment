@@ -1,0 +1,88 @@
+[
+    {
+      "id": 1,
+      "customerName": "Shah Alom",
+      "email": "shahalom@example.com",
+      "orderDate": "2024-02-20",
+      "status": "Pending",
+      "totalAmount": 280000,
+      "estimatedDelivery": "2024-03-01",
+      "items": [
+        {
+          "productId": 4,
+          "productName": "EVO400 X",
+          "quantity": 1,
+          "price": 280000
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "customerName": "John Doe",
+      "email": "johndoe@example.com",
+      "orderDate": "2024-02-18",
+      "status": "Processing",
+      "totalAmount": 300000,
+      "estimatedDelivery": "2024-02-28",
+      "items": [
+        {
+          "productId": 3,
+          "productName": "SuperBike 500",
+          "quantity": 1,
+          "price": 300000
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "customerName": "Alice Smith",
+      "email": "alicesmith@example.com",
+      "orderDate": "2024-02-22",
+      "status": "Shipped",
+      "totalAmount": 350000,
+      "estimatedDelivery": "2024-03-03",
+      "items": [
+        {
+          "productId": 2,
+          "productName": "Thunder 750",
+          "quantity": 1,
+          "price": 350000
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "customerName": "Bob Johnson",
+      "email": "bobjohnson@example.com",
+      "orderDate": "2024-02-15",
+      "status": "Delivered",
+      "totalAmount": 250000,
+      "estimatedDelivery": "2024-02-25",
+      "items": [
+        {
+          "productId": 5,
+          "productName": "Speedster 900",
+          "quantity": 1,
+          "price": 250000
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "customerName": "Emma Watson",
+      "email": "emmawatson@example.com",
+      "orderDate": "2024-02-19",
+      "status": "Canceled",
+      "totalAmount": 270000,
+      "estimatedDelivery": "2024-03-02",
+      "items": [
+        {
+          "productId": 6,
+          "productName": "Racer X100",
+          "quantity": 1,
+          "price": 270000
+        }
+      ]
+    }
+  ]
+  
