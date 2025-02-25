@@ -61,7 +61,7 @@ const HotNews: React.FC = () => {
                 </Swiper>
                 
                 {/* Custom Navigation Buttons */}
-                <div className="relative flex items-center justify-center gap-52 -mt-14">
+                <div className="relative flex items-center justify-center gap-52 -mt-14 z-40 top-0">
                     {/* Prev Button - Left Side */}
                     <button 
                         onClick={() => swiperRef.current?.slidePrev()} 

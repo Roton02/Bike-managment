@@ -11,7 +11,7 @@ export default function Home() {
     <div className=''>
       <BikeBanner />
       <BestSeller></BestSeller>
-      {/* <NewProduct></NewProduct> */}
+      <NewProduct></NewProduct>
       <Specifications></Specifications>
       <WhyChooseUs></WhyChooseUs>
       <HotNews></HotNews>

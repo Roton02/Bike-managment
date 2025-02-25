@@ -9,11 +9,11 @@ const NewProduct = () => {
     return (
         <div className=" max-w m-top mb-20 flex lg:flex-row md:flex-row flex-col text-start p-4 gap-4">
             <div className=" lg:w-7/12 md:w-7/12 w-f  space-y-6 ">
-                <div className="flex gap-3 mb-4   justify-between  h-ful">
-                    <h1 className="text-5xl text-black font-semibold uppercase">See Our New  <br /> Products</h1>
+                <div className="flex gap-3 mb-4 flex-wrap   justify-between  h-ful">
+                    <h1 className="lg:text-5xl md:text-3xl text-2xl text-black font-semibold uppercase">See Our New  <br /> Products</h1>
                     <div className=" flex  gap-3  items-end " >
-                        <button className=" rounded-full p-1 border border-black  h-10 w-10 "> <MoveRight></MoveRight></button>
-                        <button className=" rounded-full p-1 border border-black  h-10 w-10 "> <MoveLeft></MoveLeft></button>
+                        <button className=" rounded-full p-1 border border-black  h-10 w-10 "><MoveLeft></MoveLeft></button>
+                        <button className=" rounded-full p-1 border border-black  h-10 w-10 "> <MoveRight></MoveRight> </button>
                     </div>
                 </div>
                 <div className=" flex gap-3 mt-2">
@@ -43,7 +43,7 @@ const NewProduct = () => {
             </div>
 
 
-            <div className="w-5/12  min-h-5 ">
+            <div className="lg:w-5/12 md:w-5/12 w-full  min-h-5  ">
 
                 <div className=" bg-gray-100">
                     <img src={bike2} alt="" />

@@ -15,8 +15,8 @@ const DashNav = () => {
     ];
 
     const userLinks = [
-        { to: '/dashBoard/profile', label: 'My Profile' },
-        { to: '/dashBoard/orders', label: 'My Order' },
+        { to: '/dashBoard/myProfile', label: 'My Profile' },
+        { to: '/dashBoard/myOrder', label: 'My Order' },
         { to: '/dashBoard/support', label: 'Support & Help' }
     ];
 

@@ -14,6 +14,7 @@ import ManageProduct from '@/pages/DashBoard/ManageProduct'
 import ManageOrders from '@/pages/DashBoard/ManageOrder'
 import ManagePayments from '@/pages/DashBoard/ManagePayments'
 import SupportHelp from '@/pages/DashBoard/SupportHelp'
+import UserProfile from '@/pages/DashBoard/UserProfile'
 
 const router = createBrowserRouter([
   {
@@ -75,6 +76,10 @@ const router = createBrowserRouter([
 
 
       // user 
+      {
+        path: '/dashBoard/myProfile',
+        element: <UserProfile></UserProfile>,
+      },
       {
         path: '/dashBoard/myOrder',
         element: <MyOrder></MyOrder>,
