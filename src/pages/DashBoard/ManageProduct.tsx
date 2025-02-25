@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import PaginationBtn from "@/component/PaginationBtn";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { IoMdAdd } from "react-icons/io";
+import { Link } from "react-router-dom";
 
 interface Product {
   id: number;
@@ -72,9 +73,9 @@ const ManageProduct = () => {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-        <button className="bg-primary text-white px-4 py-2 rounded flex items-center">
+       <Link to={'/dashBoard/addProduct'}> <button className="bg-primary text-white px-4 py-2 rounded flex items-center">
           <IoMdAdd size={20} /> Add Product
-        </button>
+        </button></Link>
       </div>
 
       {/* Product Table */}

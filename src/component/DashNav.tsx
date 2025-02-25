@@ -10,6 +10,7 @@ const DashNav = () => {
         { to: '/dashBoard/overView', label: 'OverView' },
         { to: '/dashBoard/userManagement', label: 'User Management' },
         { to: '/dashBoard/product-management', label: 'Product Management' },
+        { to: '/dashBoard/addProduct', label: 'Add Product' },
         { to: '/dashBoard/order-management', label: 'Order Management' },
         { to: '/dashBoard/payment-management', label: 'Payment Management' }
     ];
