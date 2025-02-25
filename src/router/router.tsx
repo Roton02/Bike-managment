@@ -16,6 +16,7 @@ import ManagePayments from '@/pages/DashBoard/ManagePayments'
 import SupportHelp from '@/pages/DashBoard/SupportHelp'
 import UserProfile from '@/pages/DashBoard/UserProfile'
 import AddProduct from '@/pages/DashBoard/AddProduct'
+import UpdateProduct from '@/pages/DashBoard/UpdateProduct'
 
 const router = createBrowserRouter([
   {
@@ -77,6 +78,10 @@ const router = createBrowserRouter([
       {
         path: '/dashBoard/addProduct',
         element: <AddProduct></AddProduct>,
+      },
+      {
+        path: '/dashBoard/updateProduct/:id',
+        element: <UpdateProduct></UpdateProduct>,
       },
 
 

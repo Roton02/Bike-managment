@@ -73,7 +73,7 @@ const ManageProduct = () => {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-       <Link to={'/dashBoard/addProduct'}> <button className="bg-primary text-white px-4 py-2 rounded flex items-center">
+        <Link to={'/dashBoard/addProduct'}> <button className="bg-primary text-white px-4 py-2 rounded flex items-center">
           <IoMdAdd size={20} /> Add Product
         </button></Link>
       </div>
@@ -96,9 +96,9 @@ const ManageProduct = () => {
                 <td className="p-2 border">{product.name}</td>
                 <td className="p-2 border">${product.price}</td>
                 <td className="p-2 border flex justify-center gap-2">
-                  <button className="text-green-600 hover:text-green-800">
+                  <Link to={`/dashBoard/updateProduct/${product?.id}`}>   <button className="text-green-600 hover:text-green-800">
                     <FaEdit size={18} />
-                  </button>
+                  </button></Link>
                   <button
                     className="text-red-600 hover:text-red-800"
                     onClick={() => handleDelete(product.id)}
