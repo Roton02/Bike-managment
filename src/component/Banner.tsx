@@ -11,51 +11,6 @@ import banner1 from '../assets/banner1.png'
 
 const images = [banner1, banner1, banner1, banner1]
 
-// Custom Arrow Components
-const NextArrow = (props: any) => (
-  <div
-    {...props}
-    className='absolute top-1/2 right-4 transform -translate-y-1/2 z-10 bg-black bg-opacity-50 rounded-full p-2 cursor-pointer'
-  >
-    <svg
-      xmlns='http://www.w3.org/2000/svg'
-      className='h-6 w-6 text-white'
-      fill='none'
-      viewBox='0 0 24 24'
-      stroke='currentColor'
-    >
-      <path
-        strokeLinecap='round'
-        strokeLinejoin='round'
-        strokeWidth={2}
-        d='M9 5l7 7-7 7'
-      />
-    </svg>
-  </div>
-)
-
-const PrevArrow = (props: any) => (
-  <div
-    {...props}
-    className='absolute top-1/2 left-4 transform -translate-y-1/2 z-10 bg-black bg-opacity-50 rounded-full p-2 cursor-pointer'
-  >
-    <svg
-      xmlns='http://www.w3.org/2000/svg'
-      className='h-6 w-6 text-white'
-      fill='none'
-      viewBox='0 0 24 24'
-      stroke='currentColor'
-    >
-      <path
-        strokeLinecap='round'
-        strokeLinejoin='round'
-        strokeWidth={2}
-        d='M15 19l-7-7 7-7'
-      />
-    </svg>
-  </div>
-)
-
 const BikeBikeBanner: React.FC = () => {
   const [activeSlide, setActiveSlide] = useState(0)
 
@@ -70,16 +25,6 @@ const BikeBikeBanner: React.FC = () => {
   }
 
   const settings: Settings = {
-    dots: false,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 3000,
-    arrows: true,
-    nextArrow: <NextArrow />,
-    prevArrow: <PrevArrow />,
     beforeChange: (current, next) => setActiveSlide(next),
   }
 
