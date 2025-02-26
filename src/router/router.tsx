@@ -17,6 +17,8 @@ import SupportHelp from '@/pages/DashBoard/SupportHelp'
 import UserProfile from '@/pages/DashBoard/UserProfile'
 import AddProduct from '@/pages/DashBoard/AddProduct'
 import UpdateProduct from '@/pages/DashBoard/UpdateProduct'
+import { News } from '@/pages/News'
+import Contract from '@/pages/Contract'
 
 const router = createBrowserRouter([
   {
@@ -37,9 +39,13 @@ const router = createBrowserRouter([
         element: <AboutPage />,
       },
       {
-        path: '/contact',
-        element: <h2>Contact</h2>,
-      },
+        path: 'news',
+        element: <News></News>
+       },
+        {
+          path: 'contact',
+          element: <Contract></Contract>
+        },
       {
         path: 'login',
         element: <Login />,
