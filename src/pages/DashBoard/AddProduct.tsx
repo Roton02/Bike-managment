@@ -1,169 +1,167 @@
+import { useCreateBikeMutation } from '@/Redux/featured/bikes/bikesApi'
+import { imageUpload } from '@/utils/imageUpload'
+import { useForm, SubmitHandler } from 'react-hook-form'
 
-import { useForm, SubmitHandler,} from "react-hook-form";
-
-// Define the form data structure
 interface IProductForm {
-  name: string;
-  price: number;
-  maxSpeed: string;
-  travelDistance: string;
-  trunkWidth: string;
-  waterproof: string;
-  seatHeight: string;
-  chargingTime: string;
-  vehicleWeight: string;
-  ratedPower: string;
-  colorOptions: string;
-  images: string;
+  name: string
+  image: FileList
+  brand: string
+  price: number
+  category: 'Mountain' | 'Road' | 'Hybrid' | 'Electric'
+  description: string
+  quantity: number
 }
 
 const AddProduct = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm<IProductForm>();
+  const [createBike] = useCreateBikeMutation()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IProductForm>()
 
-  const onSubmit: SubmitHandler<IProductForm> = (data) => {
-    console.log("Submitted Data: ", data);
-  };
+  const onSubmit: SubmitHandler<IProductForm> = async (data) => {
+    try {
+      // Get the first file from FileList
+      const imageFile = data.image[0]
+
+      // Upload image first
+      const imageUrl = await imageUpload(imageFile)
+
+      // Prepare final data with image URL
+      const productData = {
+        ...data,
+        image: imageUrl,
+      }
+
+      console.log('Final product data:', productData)
+      const { data: bike, error } = await createBike(productData)
+      console.log(bike)
+      console.log(error)
+      // Here you can proceed with your API call to save the product
+    } catch (err) {
+      console.error('Error uploading image:', err)
+    }
+  }
 
   return (
-    <div className="max-w-xl mx-auto p-5">
-      <h1 className="text-3xl font-bold mb-4 ">Add Product</h1>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+    <div className='max-w-xl mx-auto p-5'>
+      <h1 className='text-3xl font-bold mb-4'>Add Product</h1>
+      <form onSubmit={handleSubmit(onSubmit)} className='space-y-4'>
         <div>
-          <label htmlFor="name" className="block">Product Name:</label>
+          <label htmlFor='name' className='block'>
+            Product Name:
+          </label>
           <input
-            type="text"
-            id="name"
-            {...register("name", { required: "Product name is required" })}
-            className="border p-2 w-full"
+            type='text'
+            id='name'
+            {...register('name', { required: 'Product name is required' })}
+            className='border p-2 w-full'
           />
-          {errors.name && <p className="text-red-500">{errors.name.message}</p>}
+          {errors.name && <p className='text-red-500'>{errors.name.message}</p>}
         </div>
 
         <div>
-          <label htmlFor="price" className="block">Price:</label>
+          <label htmlFor='image' className='block'>
+            Image:
+          </label>
           <input
-            type="number"
-            id="price"
-            {...register("price", { required: "Price is required" })}
-            className="border p-2 w-full"
+            type='file'
+            id='image'
+            accept='image/*'
+            {...register('image', { required: 'Image is required' })}
+            className='border p-2 w-full'
           />
-          {errors.price && <p className="text-red-500">{errors.price.message}</p>}
+          {errors.image && (
+            <p className='text-red-500'>{errors.image.message}</p>
+          )}
         </div>
 
         <div>
-          <label htmlFor="maxSpeed" className="block">Max Speed:</label>
+          <label htmlFor='brand' className='block'>
+            Brand:
+          </label>
           <input
-            type="text"
-            id="maxSpeed"
-            {...register("maxSpeed", { required: "Max Speed is required" })}
-            className="border p-2 w-full"
+            type='text'
+            id='brand'
+            {...register('brand', { required: 'Brand is required' })}
+            className='border p-2 w-full'
           />
-          {errors.maxSpeed && <p className="text-red-500">{errors.maxSpeed.message}</p>}
+          {errors.brand && (
+            <p className='text-red-500'>{errors.brand.message}</p>
+          )}
         </div>
 
         <div>
-          <label htmlFor="travelDistance" className="block">Travel Distance:</label>
+          <label htmlFor='price' className='block'>
+            Price:
+          </label>
           <input
-            type="text"
-            id="travelDistance"
-            {...register("travelDistance", { required: "Travel Distance is required" })}
-            className="border p-2 w-full"
+            type='number'
+            id='price'
+            {...register('price', { required: 'Price is required' })}
+            className='border p-2 w-full'
           />
-          {errors.travelDistance && <p className="text-red-500">{errors.travelDistance.message}</p>}
+          {errors.price && (
+            <p className='text-red-500'>{errors.price.message}</p>
+          )}
         </div>
 
         <div>
-          <label htmlFor="trunkWidth" className="block">Trunk Width:</label>
-          <input
-            type="text"
-            id="trunkWidth"
-            {...register("trunkWidth", { required: "Trunk Width is required" })}
-            className="border p-2 w-full"
-          />
-          {errors.trunkWidth && <p className="text-red-500">{errors.trunkWidth.message}</p>}
+          <label htmlFor='category' className='block'>
+            Category:
+          </label>
+          <select
+            id='category'
+            {...register('category', { required: 'Category is required' })}
+            className='border p-2 w-full'
+          >
+            <option value='Mountain'>Mountain</option>
+            <option value='Road'>Road</option>
+            <option value='Hybrid'>Hybrid</option>
+            <option value='Electric'>Electric</option>
+          </select>
+          {errors.category && (
+            <p className='text-red-500'>{errors.category.message}</p>
+          )}
         </div>
 
         <div>
-          <label htmlFor="waterproof" className="block">Waterproof:</label>
-          <input
-            type="text"
-            id="waterproof"
-            {...register("waterproof", { required: "Waterproof standard is required" })}
-            className="border p-2 w-full"
+          <label htmlFor='description' className='block'>
+            Description:
+          </label>
+          <textarea
+            id='description'
+            {...register('description', {
+              required: 'Description is required',
+            })}
+            className='border p-2 w-full'
           />
-          {errors.waterproof && <p className="text-red-500">{errors.waterproof.message}</p>}
+          {errors.description && (
+            <p className='text-red-500'>{errors.description.message}</p>
+          )}
         </div>
 
         <div>
-          <label htmlFor="seatHeight" className="block">Seat Height:</label>
+          <label htmlFor='quantity' className='block'>
+            Quantity:
+          </label>
           <input
-            type="text"
-            id="seatHeight"
-            {...register("seatHeight", { required: "Seat Height is required" })}
-            className="border p-2 w-full"
+            type='number'
+            id='quantity'
+            {...register('quantity', { required: 'Quantity is required' })}
+            className='border p-2 w-full'
           />
-          {errors.seatHeight && <p className="text-red-500">{errors.seatHeight.message}</p>}
+          {errors.quantity && (
+            <p className='text-red-500'>{errors.quantity.message}</p>
+          )}
         </div>
-
-        <div>
-          <label htmlFor="chargingTime" className="block">Charging Time:</label>
-          <input
-            type="text"
-            id="chargingTime"
-            {...register("chargingTime", { required: "Charging Time is required" })}
-            className="border p-2 w-full"
-          />
-          {errors.chargingTime && <p className="text-red-500">{errors.chargingTime.message}</p>}
-        </div>
-
-        <div>
-          <label htmlFor="vehicleWeight" className="block">Vehicle Weight:</label>
-          <input
-            type="text"
-            id="vehicleWeight"
-            {...register("vehicleWeight", { required: "Vehicle Weight is required" })}
-            className="border p-2 w-full"
-          />
-          {errors.vehicleWeight && <p className="text-red-500">{errors.vehicleWeight.message}</p>}
-        </div>
-
-        <div>
-          <label htmlFor="ratedPower" className="block">Rated Power:</label>
-          <input
-            type="text"
-            id="ratedPower"
-            {...register("ratedPower", { required: "Rated Power is required" })}
-            className="border p-2 w-full"
-          />
-          {errors.ratedPower && <p className="text-red-500">{errors.ratedPower.message}</p>}
-        </div>
-
-        <div>
-          <label htmlFor="colorOptions" className="block">Color Options:</label>
-          <input
-            type="text"
-            id="colorOptions"
-            {...register("colorOptions", { required: "Color Options are required" })}
-            className="border p-2 w-full"
-          />
-          {errors.colorOptions && <p className="text-red-500">{errors.colorOptions.message}</p>}
-        </div>
-
-        <div>
-          <label htmlFor="images" className="block">Images:</label>
-          <input
-            type="text"
-            id="images"
-            {...register("images", { required: "Images are required" })}
-            className="border p-2 w-full"
-          />
-          {errors.images && <p className="text-red-500">{errors.images.message}</p>}
-        </div>
-
-        <button type="submit" className="mt-4 bg-primary text-white p-2 w-full">Submit</button>
+        <button type='submit' className='mt-4 bg-primary text-white p-2 w-full'>
+          Submit
+        </button>
       </form>
     </div>
-  );
-};
+  )
+}
 
-export default AddProduct;
+export default AddProduct

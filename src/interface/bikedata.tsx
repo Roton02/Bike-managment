@@ -82,4 +82,10 @@ interface BikeData {
 
 export default BikeData
 
+
+export type TBikeRespose = {
+  success: boolean,
+  message: string,
+  data?: BikeData | BikeData[]
+}
 // export default BikeData

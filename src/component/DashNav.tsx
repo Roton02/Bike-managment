@@ -1,10 +1,11 @@
 import { LogOut } from 'lucide-react'
 import { NavLink } from 'react-router-dom'
 import logo from '../assets/logo-white.png'
-import { useAppSelector } from '@/Redux/hooks'
-import { UseCurrentUser } from '@/Redux/featured/auth/authSlice'
+import { useAppDispatch, useAppSelector } from '@/Redux/hooks'
+import { logout, UseCurrentUser } from '@/Redux/featured/auth/authSlice'
 
 const DashNav = () => {
+  const dispacth = useAppDispatch()
   const user = useAppSelector(UseCurrentUser)
   console.log(user)
 
@@ -61,6 +62,7 @@ const DashNav = () => {
       {/* Logout */}
       <div className='bg-primary p-2'>
         <NavLink
+          onClick={() => dispacth(logout())}
           to='/login'
           className='gap-2 text-center flex justify-center items-center text-white px-2 py-1 bg-primary rounded-sm hover:bg-blue-700'
         >
