@@ -5,12 +5,12 @@ import { useAppDispatch } from '@/Redux/hooks'
 import verrifyToken from '@/utils/verifyToken'
 import { FieldValues, useForm } from 'react-hook-form'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { toast } from 'sonner'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import bg from '../assets/bikeBike.png'
 import img from '../assets/login-img-2.png'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
+import { toast } from 'react-toastify'
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false)
@@ -27,7 +27,6 @@ const Login = () => {
   const [login] = useLoginMutation()
 
   const onSubmit = async (data: FieldValues) => {
-    const toastId = toast.loading('looging in ')
     try {
       const userInfo = {
         email: data.email,
@@ -38,10 +37,10 @@ const Login = () => {
       const user = verrifyToken(res.data.token)
 
       dispatch(setUser({ user: user, token: res.data.token }))
-      toast.loading('Login successful', { id: toastId, duration: 2000 })
+      toast.success('Login successful')
       navigate(location?.state ? location.state : '/')
     } catch (error: any) {
-      toast.error(error.message, { id: toastId, duration: 2000 })
+      toast.error('invalid credentials')
     }
   }
 
@@ -91,7 +90,7 @@ const Login = () => {
               <button
                 type='button'
                 onClick={() => setShowPassword(!showPassword)}
-                className='absolute top-4 right-4 text-gray-400'
+                className='absolute top-10 right-4 text-gray-400'
               >
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </button>

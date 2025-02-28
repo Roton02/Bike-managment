@@ -9,39 +9,63 @@ import {
 } from '@/Redux/featured/auth/authApi'
 import { TUser } from '@/interface/userData'
 import { Button } from '@/components/ui/button'
-import { useAppDispatch } from '@/Redux/hooks'
 
 const ManageUser = () => {
-  const disPacth = useAppDispatch()
   const [blockUser] = useBlockUserMutation()
   const [unblockUser] = useUnBlockUserMutation()
   const [deleteUser] = useDeleteCustomerMutation()
   const [currentPage, setCurrentPage] = useState(1)
-  const totalPages = 10
+  const itemsPerPage = 5 // Number of items to show per page
 
-  const { data, error, isLoading } = useGetAllCustomersQuery(undefined)
+  const { data,  isLoading } = useGetAllCustomersQuery(undefined)
 
   const customers = data?.data || [] // ✅ Extract only the `data` array
 
-  console.log(customers) //
+  // Pagination calculations
+  const totalItems = customers.length
+  const totalPages = Math.ceil(totalItems / itemsPerPage)
+
+  // Get current items for the page
+  const indexOfLastItem = currentPage * itemsPerPage
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage
+  const currentItems = customers.slice(indexOfFirstItem, indexOfLastItem)
+
+  // Handle page change
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber)
+  }
 
   // Toggle user active status
   const handleBlockUser = async (id: string) => {
-    const res = await blockUser(id)
-    console.log('Toggled status for user ID:', res)
-    // Update user status in the backend
+    try {
+      await blockUser(id).unwrap()
+    } catch (error) {
+      console.error('Failed to block user:', error)
+    }
   }
   const handleUnBlockUser = async (id: string) => {
-    const res = await unblockUser(id)
-    console.log('Toggled status for user ID:', res)
-    // Update user status in the backend
+    try {
+      await unblockUser(id).unwrap()
+    } catch (error) {
+      console.error('Failed to unblock user:', error)
+    }
   }
 
   // Update user role
   const handleDeleteuser = async (id: string) => {
-    const res = await deleteUser(id)
-    console.log('Updated role for user ID:', res)
-    // Update role in the backend
+    try {
+      await deleteUser(id).unwrap()
+    } catch (error) {
+      console.error('Failed to delete user:', error)
+    }
+  }
+
+  if (isLoading) {
+    return <div className='text-center py-4'>Loading...</div>
+  }
+
+  if (!customers.length) {
+    return <div className='text-center py-4'>No users found</div>
   }
 
   return (
@@ -60,7 +84,7 @@ const ManageUser = () => {
             </tr>
           </thead>
           <tbody>
-            {customers?.map((user: TUser) => (
+            {currentItems.map((user: TUser) => (
               <tr key={user._id} className='border-b hover:bg-gray-100'>
                 <td className='p-3'>{user.name}</td>
                 <td className='p-3'>{user.email}</td>
@@ -97,14 +121,16 @@ const ManageUser = () => {
         </table>
       </div>
 
-      {/* Pagination */}
-      <div className='mt-4'>
-        <PaginationBtn
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={(page) => setCurrentPage(page)}
-        />
-      </div>
+      {/* Pagination - Only show if there are items */}
+      {totalItems > itemsPerPage && (
+        <div className='mt-4'>
+          <PaginationBtn
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
+        </div>
+      )}
     </div>
   )
 }

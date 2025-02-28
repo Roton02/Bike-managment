@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+ 
 import React, { useState, useRef } from 'react'
 import { Button } from '@/components/ui/button' // ShadCN UI Button
 import Slider, { Settings } from 'react-slick' // React Slick for Slider

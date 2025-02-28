@@ -87,7 +87,10 @@ const Navbar = () => {
               >
                 <img
                   className='w-10 h-10 rounded-full border-2 border-gray-300 hover:border-blue-500'
-                  src='https://randomuser.me/api/portraits/men/45.jpg'
+                  src={
+                    user?.image ||
+                    'https://randomuser.me/api/portraits/men/45.jpg'
+                  }
                   alt='Profile'
                 />
                 <span className='absolute top-full left-1/2 transform -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition'>
@@ -110,7 +113,11 @@ const Navbar = () => {
               <div className='flex items-center gap-3 px-4 py-2 border-b dark:border-gray-700'>
                 <img
                   className='w-12 h-12 rounded-full'
-                  src='https://randomuser.me/api/portraits/men/45.jpg'
+                  src={
+                    user?.image
+                      ? user?.image
+                      : 'https://randomuser.me/api/portraits/men/45.jpg'
+                  }
                   alt='User'
                 />
                 <div>

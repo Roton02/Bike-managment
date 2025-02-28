@@ -1,5 +1,5 @@
-import { ContactHero } from "@/component/ContactHero"
-import ContactUs from "@/component/ContactUs"
+import { ContactHero } from '@/component/ContactHero'
+import ContactUs from '@/component/ContactUs'
 
 export const Contract = () => {
   return (

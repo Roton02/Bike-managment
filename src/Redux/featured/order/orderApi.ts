@@ -1,63 +1,66 @@
-import BikeData from '@/interface/bikedata'
 import { baseApi } from '@/Redux/api/baseApi'
+import { IOrder, OrderResponse } from '@/interface/orderData'
 
 const orderApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getAllOrder: builder.query({
+    // Get all orders (Admin only)
+    getAllOrders: builder.query({
       query: () => ({
         url: '/order/get-order',
         method: 'GET',
       }),
-      // providesTags: [{ type: 'bikes' as const, id: 'LIST' }],
+      // providesTags: ['orders'],
     }),
 
-    getBike: builder.query({
-      query: (id: string) => ({
-        url: `/bike/${id}`,
+    // Get specific user's orders (Customer)
+    getMyOrders: builder.query({
+      query: () => ({
+        url: '/order/get-single-order',
         method: 'GET',
       }),
-      // providesTags: (result, error, id) => [{ type: 'bikes' as const, id }],
+      // providesTags: ['orders'],
     }),
 
-    createBike: builder.mutation<BikeData, Partial<BikeData>>({
+    // Create new order
+    createOrder: builder.mutation<OrderResponse, Partial<IOrder>>({
       query: (data) => ({
-        url: '/bike',
+        url: '/order/create-order',
         method: 'POST',
         body: data,
       }),
-      // invalidatesTags: [{ type: 'bikes' as const, id: 'LIST' }],
+      // invalidatesTags: ['orders'],
     }),
 
-    updateBike: builder.mutation<
-      BikeData,
-      { id: string; data: Partial<BikeData> }
+    // Update order status (Admin only)
+    updateOrderStatus: builder.mutation<
+      IOrder,
+      { orderId: string; updateStatus: string }
     >({
-      query: ({ id, data }) => ({
-        url: `/bike/${id}`,
+      query: ({ orderId, updateStatus }) => ({
+        url: `/order/update-order/${orderId}`,
         method: 'PATCH',
-        body: data,
+        body: { updateStatus },
       }),
-      // invalidatesTags: (result, error, { id }) => [
-      //   { type: 'bikes' as const, id },
-      // ],
+      // invalidatesTags: ['orders'],
     }),
 
-    deleteBike: builder.mutation<void, string>({
-      query: (id) => ({
-        url: `/bike/${id}`,
+    // Delete order (Admin only)
+    deleteOrder: builder.mutation<void, string>({
+      query: (orderId) => ({
+        url: `/order/delete-order/${orderId}`,
         method: 'DELETE',
       }),
-      // invalidatesTags: (result, error, id) => [{ type: 'bikes' as const, id }],
+      // invalidatesTags: ['orders'],
     }),
   }),
 })
 
 export const {
-  useGetAllOrderQuery,
-  useGetBikeQuery,
-  useCreateBikeMutation,
-  useUpdateBikeMutation,
-  useDeleteBikeMutation,
+  useGetAllOrdersQuery,
+  useGetMyOrdersQuery,
+  useCreateOrderMutation,
+  useUpdateOrderStatusMutation,
+  useDeleteOrderMutation,
 } = orderApi
 
 export default orderApi

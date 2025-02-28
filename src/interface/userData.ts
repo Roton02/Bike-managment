@@ -3,6 +3,7 @@ export type TUser = {
   exp: number
   iat: number
   name: string
+  image: string
   role: string
   _id: string
   isDeleted: boolean

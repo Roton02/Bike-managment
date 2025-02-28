@@ -1,6 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useCreateBikeMutation } from '@/Redux/featured/bikes/bikesApi'
 import { imageUpload } from '@/utils/imageUpload'
 import { useForm, SubmitHandler } from 'react-hook-form'
+import { toast } from 'react-toastify'
 
 interface IProductForm {
   name: string
@@ -17,6 +20,7 @@ const AddProduct = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<IProductForm>()
 
@@ -30,16 +34,25 @@ const AddProduct = () => {
 
       // Prepare final data with image URL
       const productData = {
-        ...data,
+        name: data.name,
+        price: Number(data.price),
+        quantity: Number(data.quantity),
+        inStock: true,
+        category: data.category as 'Mountain' | 'Road' | 'Hybrid' | 'Electric',
+        description: data.description.trim(),
+        brand: data.brand.trim(),
         image: imageUrl,
       }
 
-      console.log('Final product data:', productData)
       const { data: bike, error } = await createBike(productData)
+      if (bike?.success) {
+        reset()
+        toast.success('bike created successfully')
+      }
       console.log(bike)
-      console.log(error)
       // Here you can proceed with your API call to save the product
-    } catch (err) {
+    } catch (err: any) {
+      toast.error('Error creating product:', err.message)
       console.error('Error uploading image:', err)
     }
   }

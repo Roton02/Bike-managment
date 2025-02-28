@@ -1,6 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { RootState } from '../store'
+
+export type TagTypes = 'bikes' | 'users' | 'products'
 
 const baseQuery = fetchBaseQuery({
   baseUrl: 'http://localhost:5000/api',
@@ -13,8 +14,10 @@ const baseQuery = fetchBaseQuery({
     return headers
   },
 })
+
 export const baseApi = createApi({
   reducerPath: 'baseApi',
   baseQuery: baseQuery,
-  endpoints: (builder) => ({}),
+  tagTypes: ['bikes', 'users', 'products'],
+  endpoints: () => ({}),
 })

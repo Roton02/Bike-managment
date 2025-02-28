@@ -1,4 +1,4 @@
-import BikeData from '@/interface/bikedata'
+ 
 import { baseApi } from '@/Redux/api/baseApi'
 
 const bikesApi = baseApi.injectEndpoints({
@@ -10,7 +10,7 @@ const bikesApi = baseApi.injectEndpoints({
           : '/bike',
         method: 'GET',
       }),
-      // providesTags: [{ type: 'bikes' as const, id: 'LIST' }],
+      providesTags: ['bikes'],
     }),
 
     getBike: builder.query({
@@ -18,30 +18,25 @@ const bikesApi = baseApi.injectEndpoints({
         url: `/bike/${id}`,
         method: 'GET',
       }),
-      // providesTags: (result, error, id) => [{ type: 'bikes' as const, id }],
+      providesTags: ['bikes'],
     }),
 
-    createBike: builder.mutation<BikeData, Partial<BikeData>>({
+    createBike: builder.mutation({
       query: (data) => ({
         url: '/bike',
         method: 'POST',
         body: data,
       }),
-      // invalidatesTags: [{ type: 'bikes' as const, id: 'LIST' }],
+      invalidatesTags: ['bikes'],
     }),
 
-    updateBike: builder.mutation<
-      BikeData,
-      { id: string; data: Partial<BikeData> }
-    >({
+    updateBike: builder.mutation({
       query: ({ id, data }) => ({
         url: `/bike/${id}`,
         method: 'PATCH',
         body: data,
       }),
-      // invalidatesTags: (result, error, { id }) => [
-      //   { type: 'bikes' as const, id },
-      // ],
+      invalidatesTags: ['bikes'],
     }),
 
     deleteBike: builder.mutation<void, string>({
@@ -49,7 +44,7 @@ const bikesApi = baseApi.injectEndpoints({
         url: `/bike/${id}`,
         method: 'DELETE',
       }),
-      // invalidatesTags: (result, error, id) => [{ type: 'bikes' as const, id }],
+      invalidatesTags: ['bikes'],
     }),
   }),
 })

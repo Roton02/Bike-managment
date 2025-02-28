@@ -1,57 +1,100 @@
 import { baseApi } from '@/Redux/api/baseApi'
 
+interface UpdateUserData {
+  name?: string
+  email?: string
+  image?: string
+  currentPassword?: string
+  newPassword?: string
+}
+
+interface AuthResponse {
+  success: boolean
+  message: string
+  data: {
+    token?: string
+    user?: {
+      _id: string
+      name: string
+      email: string
+      role: string
+      image: string
+      isBlocked: boolean
+    }
+  }
+}
+
 const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    // Register user
+    // Auth endpoints
     register: builder.mutation({
       query: (userData) => ({
         url: '/auth/register',
         method: 'POST',
         body: userData,
       }),
+      invalidatesTags: ['users'],
     }),
 
-    // Login user
     login: builder.mutation({
-      query: (userInfo) => ({
+      query: (credentials) => ({
         url: '/auth/login',
         method: 'POST',
-        body: userInfo,
+        body: credentials,
       }),
+      invalidatesTags: ['users'],
     }),
 
-    // Block/Unblock user (Admin only)
+    // User management endpoints (Admin only)
     blockUser: builder.mutation({
       query: (userId) => ({
         url: `/admin/users/${userId}`,
         method: 'PATCH',
       }),
-      invalidatesTags: [{ type: 'Users' }],
+      invalidatesTags: ['users'],
     }),
+
     unBlockUser: builder.mutation({
       query: (userId) => ({
         url: `/admin/unblock/${userId}`,
         method: 'PATCH',
       }),
-      invalidatesTags: [{ type: 'Users' }],
+      invalidatesTags: ['users'],
     }),
 
-    // Delete customer (Admin only)
+    // User profile update (Customer & Admin)
+    updateUser: builder.mutation({
+      query: ({ userId, data }) => ({
+        url: `/user/update/${userId}`,
+        method: 'PATCH',
+        body: data,
+      }),
+      invalidatesTags: ['users'],
+    }),
+
+    // Delete user (Admin only)
     deleteCustomer: builder.mutation({
-      query: (id) => ({
-        url: `/admin/blogs/${id}`,
+      query: (userId) => ({
+        url: `/admin/blogs/${userId}`,
         method: 'DELETE',
       }),
-      invalidatesTags: [{ type: 'Users' }],
+      invalidatesTags: ['users'],
     }),
 
-    // Get all customers (Admin only)
+    // Get all users (Admin only)
     getAllCustomers: builder.query({
       query: () => ({
         url: '/get-all-users',
         method: 'GET',
       }),
-      providesTags: [{ type: 'Users' }],
+      providesTags: ['users'],
+    }),
+    getSingleUser: builder.query({
+      query: (id) => ({
+        url: `/get-single-user/${id}`,
+        method: 'GET',
+      }),
+      providesTags: ['users'],
     }),
   }),
 })
@@ -60,7 +103,11 @@ export const {
   useLoginMutation,
   useRegisterMutation,
   useBlockUserMutation,
+  useUnBlockUserMutation,
+  useUpdateUserMutation,
   useDeleteCustomerMutation,
   useGetAllCustomersQuery,
-  useUnBlockUserMutation,
+  useGetSingleUserQuery,
 } = authApi
+
+export default authApi

@@ -6,6 +6,7 @@ import { persistor, store } from './Redux/store.ts'
 import { RouterProvider } from 'react-router-dom'
 import router from './router/router.tsx'
 import { PersistGate } from 'redux-persist/integration/react'
+import { ToastContainer } from 'react-toastify'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -14,5 +15,6 @@ createRoot(document.getElementById('root')!).render(
         <RouterProvider router={router} />
       </PersistGate>
     </Provider>
+    <ToastContainer />
   </StrictMode>
 )

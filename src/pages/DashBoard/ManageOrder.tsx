@@ -1,23 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState, useEffect } from 'react'
 import PaginationBtn from '@/component/PaginationBtn'
-import { useGetAllOrderQuery } from '@/Redux/featured/order/orderApi'
-
-export interface IOrder {
-  _id: string
-  customerName: string
-  customerEmail: string
-  customerAddress: string
-  customerPhoneNumber: string
-  productName: string
-  productPrice: number
-  user: string
-  product: string
-  quantity: number
-  totalPrice?: number
-  isAproved?: 'Pending' | 'Processing' | 'Shipped' | 'Delivered'
-  status?: 'Paid' | 'Failed' | 'Cancelled'
-}
+import {
+  useGetAllOrdersQuery,
+  useUpdateOrderStatusMutation,
+  useDeleteOrderMutation,
+} from '@/Redux/featured/order/orderApi'
+import { toast } from 'react-toastify'
+import { IOrder } from '@/interface/orderData'
 
 const ManageOrders = () => {
   const [orders, setOrders] = useState<IOrder[]>([])
@@ -25,7 +15,9 @@ const ManageOrders = () => {
   const [search, setSearch] = useState('')
   const itemsPerPage = 5
 
-  const { data, isLoading } = useGetAllOrderQuery(undefined)
+  const { data, isLoading } = useGetAllOrdersQuery(undefined)
+  const [updateOrderStatus] = useUpdateOrderStatusMutation()
+  const [deleteOrder, { isLoading: isDeleting }] = useDeleteOrderMutation()
 
   useEffect(() => {
     if (data?.data) {
@@ -33,30 +25,45 @@ const ManageOrders = () => {
     }
   }, [data])
 
-  const handleStatusChange = (id: number, newStatus: string) => {
-    console.log(id)
+  const handleStatusChange = async (orderId: string, newStatus: string) => {
+    try {
+      await updateOrderStatus({
+        orderId,
+        updateStatus: newStatus,
+      }).unwrap()
+      toast.success('Order status updated successfully')
+    } catch (error) {
+      toast.error('Failed to update order status')
+      console.error('Update error:', error)
+    }
   }
 
-  const handleDelete = (id: number) => {
-    console.log(id)
+  const handleDelete = async (orderId: string) => {
+    try {
+      await deleteOrder(orderId).unwrap()
+      toast.success('Order deleted successfully')
+    } catch (error) {
+      toast.error('Failed to delete order')
+      console.error('Delete error:', error)
+    }
   }
 
-  const filteredOrders = orders?.filter((order) => {
-    console.log('Checking Order:', order.customerName) // Debugging customer names
-    return order.customerName
-      ?.toLowerCase()
-      .includes(search?.toLowerCase() || '')
-  })
+  const filteredOrders = orders?.filter((order) =>
+    order.customerName?.toLowerCase().includes(search.toLowerCase())
+  )
 
   const indexOfLastItem = currentPage * itemsPerPage
   const indexOfFirstItem = indexOfLastItem - itemsPerPage
   const currentItems = filteredOrders?.slice(indexOfFirstItem, indexOfLastItem)
-  console.log(filteredOrders)
+
+  if (isLoading) {
+    return <div className='text-center py-4'>Loading...</div>
+  }
 
   return (
     <div className='p-4'>
-      <h2 className='text-2xl font-bold mb-4'>Manage Orders</h2>?
-      {/* Search Bar */}
+      <h2 className='text-2xl font-bold mb-4'>Manage Orders</h2>
+
       <input
         type='text'
         placeholder='Search by customer name...'
@@ -64,7 +71,7 @@ const ManageOrders = () => {
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />
-      {/* Orders Table */}
+
       <div className='overflow-x-auto'>
         <table className='w-full border-collapse border border-gray-200'>
           <thead>
@@ -72,23 +79,22 @@ const ManageOrders = () => {
               <th className='p-2 border'>Name</th>
               <th className='p-2 border'>Email</th>
               <th className='p-2 border'>Total</th>
-              <th className='p-2 border'>Delivery status</th>
-              <th className='p-2 border'>Edit Status</th>
+              <th className='p-2 border'>Delivery Status</th>
+              <th className='p-2 border'>Payment Status</th>
               <th className='p-2 border'>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {currentItems.map((order) => (
+            {currentItems?.map((order) => (
               <tr key={order._id} className='text-center'>
                 <td className='p-2 border'>{order.customerName}</td>
                 <td className='p-2 border'>{order.customerEmail}</td>
                 <td className='p-2 border'>${order.totalPrice}</td>
-                <td className='p-2 border'>{order.isAproved}</td>
                 <td className='p-2 border'>
                   <select
-                    value={order.status}
+                    value={order.isAproved}
                     onChange={(e) =>
-                      handleStatusChange(order._id, e.target.value)
+                      handleStatusChange(order._id!, e.target.value)
                     }
                     className='border p-1 rounded'
                   >
@@ -99,11 +105,25 @@ const ManageOrders = () => {
                   </select>
                 </td>
                 <td className='p-2 border'>
-                  <button
-                    className='text-red-600 hover:text-red-800'
-                    onClick={() => handleDelete(order._id)}
+                  <span
+                    className={`px-2 py-1 rounded ${
+                      order.status === 'Paid'
+                        ? 'bg-green-200 text-green-800'
+                        : order.status === 'Failed'
+                        ? 'bg-red-200 text-red-800'
+                        : 'bg-yellow-200 text-yellow-800'
+                    }`}
                   >
-                    Delete
+                    {order.status}
+                  </span>
+                </td>
+                <td className='p-2 border'>
+                  <button
+                    className='text-red-600 hover:text-red-800 disabled:opacity-50'
+                    onClick={() => handleDelete(order._id!)}
+                    disabled={isDeleting}
+                  >
+                    {isDeleting ? 'Deleting...' : 'Delete'}
                   </button>
                 </td>
               </tr>
@@ -111,12 +131,16 @@ const ManageOrders = () => {
           </tbody>
         </table>
       </div>
-      {/* Pagination */}
-      <PaginationBtn
-        currentPage={currentPage}
-        totalPages={Math.ceil(filteredOrders.length / itemsPerPage)}
-        onPageChange={(page) => setCurrentPage(page)}
-      />
+
+      {filteredOrders.length > itemsPerPage && (
+        <div className='mt-4'>
+          <PaginationBtn
+            currentPage={currentPage}
+            totalPages={Math.ceil(filteredOrders.length / itemsPerPage)}
+            onPageChange={(page) => setCurrentPage(page)}
+          />
+        </div>
+      )}
     </div>
   )
 }

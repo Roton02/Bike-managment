@@ -3,39 +3,30 @@ import PaginationBtn from '@/component/PaginationBtn'
 import { FaEdit, FaTrash } from 'react-icons/fa'
 import { IoMdAdd } from 'react-icons/io'
 import { Link } from 'react-router-dom'
-import { useGetAllBikesQuery } from '@/Redux/featured/bikes/bikesApi'
+import {
+  useGetAllBikesQuery,
+  useDeleteBikeMutation,
+} from '@/Redux/featured/bikes/bikesApi'
+import { toast } from 'react-toastify'
 
-interface Product {
-  id: number
+interface Bike {
+  _id: string
   name: string
   price: number
   brand: string
   category: string
-  maxSpeed: string
-  travelDistance: string
-  trunkWidth: string
-  waterproof: string
-  seatHeight: string
-  groundClearance: string
-  chargingTime: string
-  vehicleWeight: string
-  permissibleWeight: string
-  ratedPower: string
-  dimensions: string
-  screen: string
-  colorOptions: string[]
-  images: string[]
   quantity: number
 }
 
 const ManageProduct = () => {
-  const [products, setProducts] = useState<Product[]>([])
+  const [products, setProducts] = useState<Bike[]>([])
   const [search, setSearch] = useState('')
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>([])
+  const [filteredProducts, setFilteredProducts] = useState<Bike[]>([])
   const [currentPage, setCurrentPage] = useState(1)
   const itemsPerPage = 5
 
   const { data: bikes, isLoading } = useGetAllBikesQuery(undefined)
+  const [deleteBike, { isLoading: isDeleting }] = useDeleteBikeMutation()
 
   // Update products when bikes data is available
   useEffect(() => {
@@ -53,8 +44,15 @@ const ManageProduct = () => {
     setFilteredProducts(filtered)
   }, [search, products])
 
-  const handleDelete = (id: number) => {
-    setProducts(products.filter((product) => product.id !== id))
+  const handleDelete = async (id: string) => {
+    try {
+      await deleteBike(id).unwrap()
+      toast.success('Bike deleted successfully')
+      // Redux query will automatically refetch due to invalidation
+    } catch (error) {
+      toast.error('Failed to delete bike')
+      console.error('Delete error:', error)
+    }
   }
 
   const indexOfLastItem = currentPage * itemsPerPage
@@ -78,8 +76,7 @@ const ManageProduct = () => {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-        <Link to={'/dashBoard/addProduct'}>
-          {' '}
+        <Link to='/dashBoard/addProduct'>
           <button className='bg-primary text-white px-4 py-2 rounded flex items-center'>
             <IoMdAdd size={20} /> Add Product
           </button>
@@ -92,31 +89,31 @@ const ManageProduct = () => {
           <thead>
             <tr className='bg-gray-200'>
               <th className='p-2 border'>Name</th>
-              <th className='p-2 border'>brand</th>
-              <th className='p-2 border'>price</th>
-              <th className='p-2 border'>category</th>
-              <th className='p-2 border'>quantity</th>
+              <th className='p-2 border'>Brand</th>
+              <th className='p-2 border'>Price</th>
+              <th className='p-2 border'>Category</th>
+              <th className='p-2 border'>Quantity</th>
               <th className='p-2 border'>Actions</th>
             </tr>
           </thead>
           <tbody>
             {currentItems.map((product) => (
-              <tr key={product.id} className='text-center'>
+              <tr key={product._id} className='text-center'>
                 <td className='p-2 border'>{product.name}</td>
                 <td className='p-2 border'>{product.brand}</td>
                 <td className='p-2 border'>{product.price}TK</td>
                 <td className='p-2 border'>{product.category}</td>
                 <td className='p-2 border'>{product.quantity}</td>
                 <td className='p-2 border flex justify-center gap-8'>
-                  <Link to={`/dashBoard/updateProduct/${product?.id}`}>
-                    {' '}
+                  <Link to={`/dashBoard/updateProduct/${product._id}`}>
                     <button className='text-green-600 hover:text-green-800'>
                       <FaEdit size={18} />
                     </button>
                   </Link>
                   <button
                     className='text-red-600 hover:text-red-800'
-                    onClick={() => handleDelete(product.id)}
+                    onClick={() => handleDelete(product._id)}
+                    disabled={isDeleting}
                   >
                     <FaTrash size={18} />
                   </button>
