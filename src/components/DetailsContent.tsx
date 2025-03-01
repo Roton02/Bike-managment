@@ -3,6 +3,7 @@ import { ChevronDown, ChevronUp } from 'lucide-react'
 import img from '../assets/bike.png'
 import PrimaryBtn from './PrimaryBtn'
 import BikeData from '@/interface/bikedata'
+import { Link } from 'react-router-dom'
 
 interface PropsType {
   bike: BikeData
@@ -10,7 +11,6 @@ interface PropsType {
 
 const DetailsContent = ({ bike }: PropsType) => {
   const [openSection, setOpenSection] = useState<string | null>('dimensions')
-
   const toggleSection = (section: string) => {
     setOpenSection(openSection === section ? null : section)
   }
@@ -21,22 +21,26 @@ const DetailsContent = ({ bike }: PropsType) => {
         <div className=''>
           {/* Bike Name & Price Section */}
           <h2 className='text-gray-700 uppercase text-lg tracking-widest'>
-            EXTEND FREEDOM - EXPAND EXPERIENCE
+            {bike.name}
           </h2>
           <h1 className='text-5xl font-extrabold mt-2'>{bike?.name}</h1>
           <p className='text-green-600 text-2xl font-bold mt-4 mb-5'>
-            {bike?.price} VND
+            {bike?.price} TK
           </p>
-          <PrimaryBtn title='Buy Now '></PrimaryBtn>
+          <div>
+            <Link to={`/checkout/${bike._id}`}>
+              <PrimaryBtn title='Buy Now '></PrimaryBtn>
+            </Link>
+          </div>
           <p className='text-sm text-gray-600 mt-2'>
             (Price includes VAT, 01 400W charger and does not include battery)
           </p>
         </div>
 
         {/* Bike Image */}
-        <div className='flex justify-center mt-6'>
-          <img src={img} alt='Bike Photo' className='w-8/12' />
-        </div>
+        {/* <div className='flex justify-center mt-6'>
+          <img src={bike.image} alt='Bike Photo' className='w-8/12' />
+        </div> */}
       </div>
 
       {/* Color Options */}

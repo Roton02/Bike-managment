@@ -19,8 +19,8 @@ const BikeDetails = () => {
 
   return (
     <div className='   my-10'>
-      <BikeDetailsBanner bike={bike}></BikeDetailsBanner>
-      <DetailsContent bike={bike}></DetailsContent>
+      <BikeDetailsBanner bike={bike.data}></BikeDetailsBanner>
+      <DetailsContent bike={bike.data}></DetailsContent>
     </div>
   )
 }

@@ -5,7 +5,7 @@ import Bikes from '@/pages/Bikes'
 import Login from '@/pages/Login'
 import Register from '@/pages/Register'
 import { createBrowserRouter } from 'react-router-dom'
-import BikeDetails from "../pages/BikeDetails"
+import BikeDetails from '../pages/BikeDetails'
 import DashBoard from '@/layout/DashBoard'
 import OverView from '@/pages/DashBoard/OverView'
 import MyOrder from '@/pages/DashBoard/MyOrder'
@@ -18,7 +18,9 @@ import UserProfile from '@/pages/DashBoard/UserProfile'
 import AddProduct from '@/pages/DashBoard/AddProduct'
 import UpdateProduct from '@/pages/DashBoard/UpdateProduct'
 import { News } from '@/pages/News'
-import Contract from '@/pages/Contract'
+import Contract from '@/pages/contract'
+import Checkout from '@/pages/Checkout'
+import ProtectedRoute from './PrivateRoute';
 
 const router = createBrowserRouter([
   {
@@ -39,20 +41,24 @@ const router = createBrowserRouter([
         element: <AboutPage />,
       },
       {
-        path: 'news',
-        element: <News></News>
-       },
-        {
-          path: 'contact',
-          element: <Contract></Contract>
-        },
+        path: '/news',
+        element: <News></News>,
+      },
       {
-        path: 'login',
+        path: '/contact',
+        element: <Contract></Contract>,
+      },
+      {
+        path: '/login',
         element: <Login />,
       },
       {
-        path: 'register',
+        path: '/register',
         element: <Register />,
+      },
+      {
+        path: '/checkOut/:id',
+        element: <ProtectedRoute><Checkout /></ProtectedRoute>,
       },
     ],
   },
@@ -60,7 +66,6 @@ const router = createBrowserRouter([
     path: '/dashBoard',
     element: <DashBoard />,
     children: [
-      
       {
         path: '/dashBoard/overView',
         element: <OverView></OverView>,
@@ -90,8 +95,7 @@ const router = createBrowserRouter([
         element: <UpdateProduct></UpdateProduct>,
       },
 
-
-      // user 
+      // user
       {
         path: '/dashBoard/myProfile',
         element: <UserProfile></UserProfile>,
@@ -104,9 +108,8 @@ const router = createBrowserRouter([
         path: '/dashBoard/support',
         element: <SupportHelp></SupportHelp>,
       },
-    ]
-  }
-
+    ],
+  },
 ])
 
 export default router
